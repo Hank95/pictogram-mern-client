@@ -14,6 +14,7 @@ function LoginForm({ onLogin }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({ username, password }),
     }).then((r) => {
@@ -21,7 +22,10 @@ function LoginForm({ onLogin }) {
       if (r.ok) {
         r.json().then((user) => onLogin(user));
       } else {
-        r.json().then((err) => setErrors(err.errors));
+        r.json().then((err) => {
+          console.log(err);
+          setErrors(err.errors);
+        });
       }
     });
   }

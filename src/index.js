@@ -4,11 +4,23 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
-// import "semantic-ui-css/semantic.min.css";
+import { ErrorBoundary } from "react-error-boundary";
+// import "semantic-ui-css/semantic.min.css"
+
+function ErrorFallback({ error }) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{ color: "red" }}>{error.message}</pre>
+    </div>
+  );
+}
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <App />
+      </ErrorBoundary>
     </Router>
   </React.StrictMode>,
   document.getElementById("root")

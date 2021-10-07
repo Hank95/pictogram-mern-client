@@ -15,9 +15,9 @@ function App() {
   const API = "http://localhost:4000";
 
   useState(() => {
-    Axios.get(API + "/api/get").then((response) => {
-      setFeed(response.data);
-    });
+    // Axios.get(API + "/api/get").then((response) => {
+    //   setFeed(response.data);
+    // });
   }, []);
 
   const handleSave = (e, title) => {
@@ -74,38 +74,39 @@ function App() {
   //   });
   // };
 
-  const nameGrabber = (nameInput) => {
-    setUser(nameInput);
-  };
-  const [nameInput, setNameInput] = useState("");
-  const handleUpdate = (e) => {
-    setNameInput(e.target.value);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    nameGrabber(nameInput);
-    console.log(nameInput);
-  };
+  // const nameGrabber = (nameInput) => {
+  //   setUser(nameInput);
+  // };
+  // const [nameInput, setNameInput] = useState("");
+  // const handleUpdate = (e) => {
+  //   setNameInput(e.target.value);
+  // };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   nameGrabber(nameInput);
+  //   console.log(nameInput);
+  // };
 
   if (!user) {
     return <Login onLogin={setUser} />;
   }
+  console.log(user);
   return (
     <div className="App">
-      <NavBar user={user} />
+      <NavBar user={null} />
       <Switch>
         <Route
           path="/sketch-pad"
-          component={() => <SketchPad handleSave={handleSave} user={user} />}
+          component={() => <SketchPad handleSave={handleSave} user={null} />}
         />
         <Route
           path="/my-sketchs"
           component={() => (
             <Pictures
-              userInside={user}
+              userInside={null}
               feed={feed}
               handleDelete={handleDelete}
-              nameGrabber={nameGrabber}
+              // nameGrabber={nameGrabber}
             />
           )}
         />
