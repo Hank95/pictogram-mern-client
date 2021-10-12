@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Route, Switch, useHistory } from "react-router-dom";
 import Axios from "axios";
+import jwt from "jsonwebtoken";
 import Home from "./Components/Home";
 import SketchPad from "./Components/SketchPad";
 import Pictures from "./Components/Pictures";
@@ -14,7 +15,35 @@ function App() {
 
   const API = "http://localhost:4000";
 
-  useState(() => {
+  const history = useHistory();
+
+  async function getFeed() {
+    const response = await fetch(API + "api/feed", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
+
+    const data = await response.json();
+    if (data.status === "ok") {
+      setFeed(data.data);
+    } else {
+      alert(data.message);
+    }
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log(token, user);
+    if (token) {
+      const user = jwt.decode(token);
+      if (!user) {
+        localStorage.removeItem("token");
+        history.replace("/login");
+      } else {
+        getFeed();
+      }
+    }
     // Axios.get(API + "/api/get").then((response) => {
     //   setFeed(response.data);
     // });
@@ -36,9 +65,9 @@ function App() {
       datePosted: curDate,
     }).then((res) => {
       console.log(res);
-      Axios.get(API + "/api/get").then((response) => {
-        setFeed(response.data);
-      });
+      // Axios.get(API + "/api/get").then((response) => {
+      //   setFeed(response.data);
+      // });
     });
   };
 
@@ -87,14 +116,15 @@ function App() {
   //   console.log(nameInput);
   // };
 
-  if (!user) {
-    return <Login onLogin={setUser} />;
-  }
-  console.log(user);
+  // if (!user) {
+  //   return <Login onLogin={setUser} />;
+  // }
+  // console.log(user);
   return (
     <div className="App">
       <NavBar user={null} />
       <Switch>
+        <Route path="/login" component={Login} />
         <Route
           path="/sketch-pad"
           component={() => <SketchPad handleSave={handleSave} user={null} />}

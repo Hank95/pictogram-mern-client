@@ -1,6 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-const NavBar = ({ user }) => {
+const NavBar = ({ user, handleLogout }) => {
   return (
     <Bar>
       <Link to="/">
@@ -18,6 +18,7 @@ const NavBar = ({ user }) => {
         <Button as={NavLink} to="/my-sketchs">
           My Sketches
         </Button>
+        <Button onClick={handleLogout}>Log Out</Button>
       </Nav>
     </Bar>
   );

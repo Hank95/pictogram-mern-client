@@ -2,15 +2,15 @@ import { useState } from "react";
 import styled from "styled-components";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
-// import dock from "../assets/dock.jpeg";
 
 function Login({ onLogin }) {
   const [showLogin, setShowLogin] = useState(true);
 
   return (
     <>
-      {/* <Image src={dock} alt="Dock" /> */}
+      <Image src={null} alt="Dock" />
       <Wrapper>
+        {/* <Logo src={laurel} alt="logo" /> */}
         <h3>Please sign in!</h3>
         {showLogin ? (
           <>
